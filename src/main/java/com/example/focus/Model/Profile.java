@@ -1,7 +1,8 @@
-package com.example.focus.Model;
 
+package com.example.focus.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
 
@@ -30,3 +32,4 @@ public class Profile {
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 }
+

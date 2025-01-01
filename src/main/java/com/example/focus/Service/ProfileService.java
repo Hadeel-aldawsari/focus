@@ -1,9 +1,9 @@
+
 package com.example.focus.Service;
-
-
 import com.example.focus.ApiResponse.ApiException;
-import com.example.focus.DTO.ProfileDTOOUT;
+import com.example.focus.DTO.OUT.ProfileDTOOUT;
 import com.example.focus.Model.Profile;
+import com.example.focus.Repository.PhotographerRepository;
 import com.example.focus.Repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,3 +57,4 @@ public class ProfileService {
     }
 
 }
+
