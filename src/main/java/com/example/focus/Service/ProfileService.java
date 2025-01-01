@@ -1,6 +1,5 @@
+
 package com.example.focus.Service;
-
-
 import com.example.focus.ApiResponse.ApiException;
 import com.example.focus.DTO.OUT.ProfileDTOOUT;
 import com.example.focus.Model.Profile;
@@ -58,3 +57,4 @@ public class ProfileService {
     }
 
 }
+

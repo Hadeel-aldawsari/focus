@@ -47,4 +47,4 @@ public class Photographer {
 
     @OneToOne(mappedBy = "photographer", cascade = CascadeType.ALL)
     private Profile profile;
-}
+

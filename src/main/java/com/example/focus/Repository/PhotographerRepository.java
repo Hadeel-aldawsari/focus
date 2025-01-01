@@ -1,3 +1,4 @@
+
 package com.example.focus.Repository;
 
 import com.example.focus.Model.Photographer;
@@ -10,3 +11,4 @@ public interface PhotographerRepository extends JpaRepository<Photographer,Integ
     Photographer findPhotographersById(Integer id);
 
 }
+

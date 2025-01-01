@@ -1,5 +1,5 @@
-package com.example.focus.Model;
 
+package com.example.focus.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -32,3 +32,4 @@ public class Profile {
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 }
+
