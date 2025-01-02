@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +23,15 @@ public class Profile {
 
 
     @Size(max = 500, message = "Description cannot exceed 500 characters")
+    @Column(columnDefinition = "varchar(50) not null")
     private String description;
 
     @Min(value = 0, message = "Number of posts cannot be negative")
+    @Column(columnDefinition = "int not null")
     private Integer numberOfPosts;
 
     @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "Image URL must be valid (http, https, or ftp)")
+    @Column(columnDefinition = "varchar not null")
     private String image;  // URL of the image
 
     @OneToOne
@@ -38,5 +43,8 @@ public class Profile {
     @JoinColumn(name = "editor_id")
     @JsonIgnore
     private Editor editor;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "media")
+    private Set<Media> medias;
 }
 

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ToolServices {
+public class ToolService {
     private final ToolRepository toolRepository;
     private final PhotographerRepository photographerRepository;
 

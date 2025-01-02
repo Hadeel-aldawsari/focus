@@ -11,7 +11,6 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Studio {
 
     @Id

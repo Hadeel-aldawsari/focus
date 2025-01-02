@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,28 +22,40 @@ public class Editor {
 
     @NotEmpty(message = "Name is required")
     @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
+    @Column(columnDefinition = "varchar(30) not null")
     private String name;
 
     @NotEmpty(message = "City is required")
+    @Column(columnDefinition = "varchar(30) not null")
     private String city;
 
     @NotEmpty(message = "Phone number is required")
     @Pattern(regexp = "^05\\d{8}$", message = "Phone number must start with 05 and have 10 digits")
+    @Column(columnDefinition = "varchar(10) not null")
     private String phoneNumber;
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Email should be valid")
+    @Column(columnDefinition = "varchar(30) not null")
     private String email;
 
     @NotEmpty(message = "Username is required")
     @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
+    @Column(columnDefinition = "varchar(30) not null unique")
     private String username;
 
-    @NotEmpty(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{6,}$",
+            message = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
+    @Column(columnDefinition = "varchar(40) not null")
+
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "editor")
+    private Set<Media> medias;
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class EditorServices {
+public class EditorService {
     private final EditorRepository editorRepository;
 
     public List<EditorDTOOUT> getAllEditors() {
