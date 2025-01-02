@@ -1,5 +1,6 @@
 
 package com.example.focus.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,6 +31,12 @@ public class Profile {
 
     @OneToOne
     @JoinColumn(name = "photographer_id")
+    @JsonIgnore
     private Photographer photographer;
+
+    @OneToOne
+    @JoinColumn(name = "editor_id")
+    @JsonIgnore
+    private Editor editor;
 }
 

@@ -49,7 +49,7 @@ public class PhotographerService {
 
 
     public void updatePhotographer(Integer id, Photographer photographer) {
-        Photographer existingPhotographer = photographerRepository.findById(id).orElse(null);
+        Photographer existingPhotographer = photographerRepository.findPhotographersById(id);
         if (existingPhotographer != null) {
             existingPhotographer.setName(photographer.getName());
             existingPhotographer.setCity(photographer.getCity());
@@ -64,7 +64,7 @@ public class PhotographerService {
 
 
     public void deletePhotographer(Integer id) {
-        Photographer existingPhotographer = photographerRepository.findById(id).orElse(null);
+        Photographer existingPhotographer = photographerRepository.findPhotographersById(id);
         if (existingPhotographer != null) {
             photographerRepository.delete(existingPhotographer);
         } else {

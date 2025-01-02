@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,4 +49,9 @@ public class Photographer {
 
     @OneToOne(mappedBy = "photographer", cascade = CascadeType.ALL)
     private Profile profile;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photographer")
+    private Set<Tool> tools;
+
+}
 
