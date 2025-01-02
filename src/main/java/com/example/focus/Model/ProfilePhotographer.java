@@ -32,9 +32,6 @@ public class ProfilePhotographer {
     @JoinColumn(name = "photographer_id")
     private Photographer photographer;
 
-    @OneToOne
-    @JoinColumn(name = "editor_id")
-    private Editor editor;
 
 
     @OneToMany

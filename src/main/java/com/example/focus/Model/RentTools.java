@@ -26,15 +26,20 @@ public class RentTools {
     @Column(columnDefinition = "DATETIME not null")
     private LocalDate endDate;
 
-    @NotNull(message = "Enter tool id")
-    @Column(columnDefinition = "int not null")
-    private Integer toolId;
-
-    @NotNull(message = "Enter tool id")
-    @Column(columnDefinition = "int not null")
-    private Integer ownerId;
 
     @Column(columnDefinition = "double ")
     private Double rentPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "tool_id")
+    private Tool tool;  // The tool being rented
+
+    @ManyToOne
+    @JoinColumn(name = "renter_id")
+    private Photographer renter;  // The photographer renting the tool
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Photographer owner;  // The photographer who owns the tool
 
 }

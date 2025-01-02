@@ -1,10 +1,7 @@
 package com.example.focus.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,25 +16,24 @@ public class ProfileStudio {
     @Id
     private Integer id;
 
-    @Size(max = 500, message = "Description cannot exceed 500 characters")
+    @NotEmpty(message = "Please enter description")
+    @Column(columnDefinition = "varchar(60) not null")
     private String description;
 
-    @PositiveOrZero(message = "Number of posts cannot be negative")
-    private Integer numberOfPosts;
+    @NotEmpty(message = "Please enter studio location")
+    @Column(columnDefinition = "varchar(20) not null")
+    private String location;
 
-    @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "Image URL must be valid (http, https, or ftp)")
-    private String image;  // URL of the image
+    @NotEmpty(message = "Please enter studio commercial Record")
+    @Pattern(regexp = "10\\d{9}",message = "Enter commercial Record start with 10 and just 9 digits")
+    @Column(columnDefinition = "varchar(9) not null unique")
+    private String commercialRecord;
 
-    @OneToOne
-    @JoinColumn(name = "photographer_id")
-    private Photographer photographer;
+    @Column(columnDefinition = "boolean ")
+    private Boolean isActivated;
 
-    @OneToOne
-    @JoinColumn(name = "editor_id")
-    private Editor editor;
+    @JoinColumn(name = "studio_id")
+    private Studio studio;
 
-
-    @OneToMany
-    private Set<Media> medias;
 
 }

@@ -1,5 +1,6 @@
 package com.example.focus.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,12 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Editor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotEmpty(message = "Please enter your name")
-    @Column(columnDefinition = "varchar(40) not null")
-    private String name;
 
     @NotEmpty(message = "Please enter your city")
     @Column(columnDefinition = "varchar(40) not null")
@@ -31,25 +27,14 @@ public class Editor {
     @Column(columnDefinition = "varchar(10) not null unique")
     private String phoneNumber;
 
-    @NotEmpty(message = "Please enter your email")
-    @Email(message = "Email should be valid")
-    @Column(columnDefinition = "varchar(40) not null unique")
-    private String email;
 
-    @NotEmpty(message = "Username is required")
-    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
-    @Column(columnDefinition = "varchar(40) not null unique")
-    private String username;
+    @OneToOne(mappedBy = "photographer", cascade = CascadeType.ALL)
+    private ProfileEditor profile;
 
-    @NotEmpty(message = "Please enter your password")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{6,}$",
-            message = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
-    @Column(columnDefinition = "varchar(40) not null")
-    private String password;
 
-    @Pattern(regexp = "(ADMIN|PHOTOGRAPHER|EDITOR)",message = "Role must be in admin or user only")
-    @Column(columnDefinition = "varchar(10) not null check (role='ADMIN' or role='USER')")
-    private String role;
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private MyUser myUser;
 
 }

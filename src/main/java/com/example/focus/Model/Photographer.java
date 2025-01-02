@@ -1,4 +1,5 @@
 package com.example.focus.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Profile;
 
 import java.util.Set;
 
@@ -17,13 +19,7 @@ import java.util.Set;
 public class Photographer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotEmpty(message = "Name cannot be empty")
-    @Size(min = 2, max = 40, message = "Name must be between 2 and 40 characters")
-    @Column(columnDefinition = "varchar(40) not null")
-    private String name;
 
     @NotEmpty(message = "City cannot be empty")
     @Column(columnDefinition = "varchar(30) not null")
@@ -34,33 +30,20 @@ public class Photographer {
     @Column(columnDefinition = "varchar(40) not null unique")
     private String phoneNumber;
 
-    @NotEmpty(message = "Email cannot be empty")
-    @Email(message = "Email should be valid")
-    @Column(columnDefinition = "varchar(40) not null unique")
-    private String email;
-
-    @NotEmpty(message = "Username cannot be empty")
-    @Size(min = 4, max = 50, message = "Username must be between 4 and 50 characters")
-    @Column(columnDefinition = "varchar(40) not null unique")
-    private String username;
-
-    @NotEmpty(message = "Please enter your password")
-    @Size(min = 6, message = "Password must be at least 6 characters")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{6,}$",
-            message = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character")
-    @Column(columnDefinition = "varchar(40) not null")
-    private String password;
-
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "photographer")
     private Set<Tool> tools;
 
     @OneToOne(mappedBy = "photographer", cascade = CascadeType.ALL)
-    private Profile profile;
+    private ProfilePhotographer profile;
 
     @OneToMany(mappedBy = "renter")
     private Set<RentTools> myOrders;  // Orders for tools this photographer rents from others
 
     @OneToMany(mappedBy = "owner")
     private Set<RentTools> rentalTools; // Rental transactions for tools this photographer owns
-    
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private MyUser myUser;
+
 }
