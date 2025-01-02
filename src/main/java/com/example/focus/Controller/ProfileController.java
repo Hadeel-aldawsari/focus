@@ -1,6 +1,4 @@
 package com.example.focus.Controller;
-
-
 import com.example.focus.ApiResponse.ApiResponse;
 import com.example.focus.Model.Profile;
 import com.example.focus.Service.ProfileService;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/focus/Profile")
 @RequiredArgsConstructor
 public class ProfileController {
-private final ProfileService profileService;
+    private final ProfileService profileService;
 
     @GetMapping("/get-all")
     public ResponseEntity getAllProfiles() {

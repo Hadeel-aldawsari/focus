@@ -1,11 +1,12 @@
 package com.example.focus.Repository;
 
-import com.example.focus.Model.Profile;
+import com.example.focus.Model.Editor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProfileRepository extends JpaRepository<Profile,Integer> {
+public interface EditorRepository extends JpaRepository<Editor,Integer> {
 
-    Profile findProfileById(Integer id);
+    Editor findEditorById(Integer id);
+
 }

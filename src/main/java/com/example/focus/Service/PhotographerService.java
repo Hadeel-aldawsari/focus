@@ -1,7 +1,7 @@
-
 package com.example.focus.Service;
+
 import com.example.focus.ApiResponse.ApiException;
-import com.example.focus.DTO.OUT.PhotographerDTOOUT;
+import com.example.focus.DTO.PhotographerDTOOUT;
 import com.example.focus.Model.Photographer;
 import com.example.focus.Model.Profile;
 import com.example.focus.Repository.PhotographerRepository;
@@ -58,7 +58,7 @@ public class PhotographerService {
         }else {
             throw new ApiException("Photographer Not Found");
         }
-            photographerRepository.save(existingPhotographer);
+        photographerRepository.save(existingPhotographer);
 
     }
 
@@ -72,4 +72,3 @@ public class PhotographerService {
         }
     }
 }
-
