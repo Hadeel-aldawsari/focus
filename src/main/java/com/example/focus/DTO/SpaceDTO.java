@@ -12,7 +12,7 @@ public class SpaceDTO {
     private String type;
     private Double area;
     private String description;
-    private Integer price;
+    private Double price;
     private String status;
     private String image;
 }

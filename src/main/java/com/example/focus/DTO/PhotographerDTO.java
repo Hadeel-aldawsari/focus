@@ -1,14 +1,11 @@
 package com.example.focus.DTO;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PhotographerDTOOUT {
+public class PhotographerDTO {
     private String username;
     private String name;
 

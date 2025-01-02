@@ -1,7 +1,7 @@
 package com.example.focus.Controller;
 
 
-import com.example.focus.DTO.EditorDTOOUT;
+import com.example.focus.DTO.EditorDTO;
 import com.example.focus.Model.Editor;
 import com.example.focus.Service.EditorService;
 import jakarta.validation.Valid;
@@ -18,13 +18,13 @@ public class EditorController {
 
     @GetMapping("/get-all")
     public ResponseEntity getAllEditors() {
-        List<EditorDTOOUT> editorDTOOUTS = editorService.getAllEditors();
-        return ResponseEntity.ok(editorDTOOUTS);
+        List<EditorDTO> editorDTOS = editorService.getAllEditors();
+        return ResponseEntity.ok(editorDTOS);
     }
 
     @PostMapping("/add-editor")
     public ResponseEntity addEditor(@RequestBody @Valid Editor editor) {
-        editorService.addEditor(editor);
+        editorService.EditorRegistration(editor);
         return ResponseEntity.ok("Editor added successfully");
     }
 
@@ -35,7 +35,7 @@ public class EditorController {
     }
 
     @DeleteMapping("/delete-editor/{id}")
-    public ResponseEntity<String> deleteEditor(@PathVariable Integer id) {
+    public ResponseEntity deleteEditor(@PathVariable Integer id) {
         editorService.deleteEditor(id);
         return ResponseEntity.ok("Editor deleted successfully");
     }

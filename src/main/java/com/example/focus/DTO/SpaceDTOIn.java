@@ -3,6 +3,7 @@ package com.example.focus.DTO;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,8 +24,9 @@ public class SpaceDTOIn {
     private String description;
     @NotNull(message = "Please enter space price")
     @Positive
-    private Integer price;
+    private Double price;
     private String status;
     @NotEmpty(message = "Enter image URL")
+    @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "Image URL must be a valid URL")
     private String image;
 }

@@ -2,6 +2,8 @@ package com.example.focus.Controller;
 
 import com.example.focus.ApiResponse.ApiResponse;
 import com.example.focus.Model.Photographer;
+import com.example.focus.Model.RentTools;
+import com.example.focus.Model.Tool;
 import com.example.focus.Service.PhotographerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,4 +39,12 @@ public class PhotographerController {
         photographerService.deletePhotographer(id);
         return ResponseEntity.status(200).body(new ApiResponse("photographer deleted"));
     }
+
+    @PostMapping("/rent-tool/{photographer_id}/{toold_id}")
+    public ResponseEntity rentTool(@PathVariable Integer photographer_id,@PathVariable Integer tool_id,@RequestBody @Valid RentTools rentTool){
+        photographerService.rentTool(photographer_id,tool_id,rentTool);
+        return ResponseEntity.status(200).body(new ApiResponse("tool rented successfully"));
+    }
+
+
 }

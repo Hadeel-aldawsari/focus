@@ -3,10 +3,13 @@ package com.example.focus.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -32,16 +35,20 @@ public class Space {
     private String description;
     @NotNull(message = "Please enter space price")
     @Positive
-    @Column(columnDefinition = "int not null ")
-    private Integer price;
+    @Column(columnDefinition = "double not null ")
+    private Double price;
     private String status;
     @NotEmpty(message = "Enter image URL")
+    @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "Image URL must be a valid URL")
     @Column(columnDefinition = "varchar not null unique")
     private String image;
 
 
     @ManyToOne
     private Studio studio;
+
+    @OneToMany(mappedBy = "space")
+    private Set<TimeSlot> timeSlots;
 
 
 }

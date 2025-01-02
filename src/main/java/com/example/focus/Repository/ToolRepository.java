@@ -10,4 +10,5 @@ public interface ToolRepository extends JpaRepository<Tool,Integer> {
 
     Tool findToolById(Integer id);
     List<Tool> findToolByPhotographer(Photographer photographer);
+    Tool getPhotographerById(Integer id);
 }

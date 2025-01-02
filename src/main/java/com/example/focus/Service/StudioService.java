@@ -1,16 +1,13 @@
 package com.example.focus.Service;
-
 import com.example.focus.ApiResponse.ApiException;
-import com.example.focus.DTO.SpaceDTO;
-import com.example.focus.DTO.SpaceDTOIn;
-import com.example.focus.DTO.StudioDTO;
-import com.example.focus.DTO.StudioDTOIn;
+import com.example.focus.DTO.*;
+import com.example.focus.Model.BookSpace;
 import com.example.focus.Model.Space;
 import com.example.focus.Model.Studio;
-import com.example.focus.Model.StudioRequest;
+import com.example.focus.Repository.BookSpaceRepository;
 import com.example.focus.Repository.SpaceRepository;
 import com.example.focus.Repository.StudioRepository;
-import com.example.focus.Repository.StudioRequestRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,7 @@ import java.util.List;
 public class StudioService {
     private final StudioRepository studioRepository;
     private final SpaceRepository spaceRepository;
-    private final StudioRequestRepository studioRequestRepository;
+    private final BookSpaceRepository bookSpaceRepository;
 
     public List<StudioDTO> getAllStudios(){
         List<Studio> studios = studioRepository.findAll();
@@ -41,6 +38,8 @@ public class StudioService {
         }
         Studio studio1 = new Studio();
         studio1.setName(studioDTOIn.getName());
+        studio1.setPhoneNumber(studioDTOIn.getPhoneNumber());
+        studio1.setEmail(studioDTOIn.getEmail());
         studio1.setDescription(studioDTOIn.getDescription());
         studio1.setLocation(studioDTOIn.getLocation());
         studio1.setCommercialRecord(studioDTOIn.getCommercialRecord());
@@ -128,6 +127,17 @@ public class StudioService {
 
     }
 
+    public List<RentalStudioRequestDTO> getSpaces(){
+        List<BookSpace> rsr = bookSpaceRepository.findAll();
+        List<RentalStudioRequestDTO> rsrDTO = new ArrayList<>();
+        for (BookSpace rs : rsr){
+            RentalStudioRequestDTO rsDTO = new RentalStudioRequestDTO(rs.getStartDate(),rs.getEndDate(),rs.getStatus(),rs.getNote());
+            rsrDTO.add(rsDTO);
+
+        }
+        return rsrDTO;
+    }
+
     // studio can accept or reject the request from photographer
     public void acceptOrRejectRequest(Integer studio_id,Integer request_id,String response){
         Studio studio = studioRepository.findStudioById(studio_id);
@@ -137,15 +147,12 @@ public class StudioService {
         if(!studio.getIsActivated()){
             throw new ApiException("studio is not activated");
         }
-        StudioRequest sr = studioRequestRepository.findStudioRequestById(request_id);
+        BookSpace sr = bookSpaceRepository.findRentalStudioRequestById(request_id);
         if(sr == null){
             throw new ApiException("request not found");
         }
-        if (response.equalsIgnoreCase("accepted")){
-            sr.setStatus(response);
-        }else if (response.equalsIgnoreCase("rejected")){
-            sr.setStatus(response);
-        }
+
+        sr.setStatus(response);
 
     }
 

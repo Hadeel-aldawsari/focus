@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class EditorDTOOUT {
+public class EditorDTO {
     private String name;
     private String city;
     private String phoneNumber;

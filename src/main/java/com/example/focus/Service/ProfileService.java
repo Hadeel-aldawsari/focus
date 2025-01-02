@@ -1,13 +1,10 @@
 package com.example.focus.Service;
-
-
 import com.example.focus.ApiResponse.ApiException;
-import com.example.focus.DTO.ProfileDTOOUT;
+import com.example.focus.DTO.ProfileDTO;
 import com.example.focus.Model.Profile;
 import com.example.focus.Repository.ProfileRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +13,12 @@ import java.util.List;
 public class ProfileService {
     private final ProfileRepository profileRepository;
 
-    public List<ProfileDTOOUT> getAllProfiles() {
+    public List<ProfileDTO> getAllProfiles() {
         List<Profile> profiles = profileRepository.findAll();
-        List<ProfileDTOOUT> profileDTOs = new ArrayList<>();
+        List<ProfileDTO> profileDTOs = new ArrayList<>();
 
         for (Profile profile : profiles) {
-            ProfileDTOOUT profileDTO = new ProfileDTOOUT(
+            ProfileDTO profileDTO = new ProfileDTO(
                     profile.getDescription(),
                     profile.getNumberOfPosts(),
                     profile.getImage()

@@ -1,8 +1,9 @@
 package com.example.focus.Service;
 
 
-import com.example.focus.DTO.EditorDTOOUT;
+import com.example.focus.DTO.EditorDTO;
 import com.example.focus.Model.Editor;
+import com.example.focus.Model.Profile;
 import com.example.focus.Repository.EditorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,12 @@ import java.util.List;
 public class EditorService {
     private final EditorRepository editorRepository;
 
-    public List<EditorDTOOUT> getAllEditors() {
+    public List<EditorDTO> getAllEditors() {
         List<Editor> editors = editorRepository.findAll();
-        List<EditorDTOOUT> editorDTOOUTS = new ArrayList<>();
+        List<EditorDTO> editorDTOS = new ArrayList<>();
 
         for (Editor editor : editors) {
-            EditorDTOOUT editorDTOOUT = new EditorDTOOUT(
+            EditorDTO editorDTO = new EditorDTO(
                     editor.getName(),
                     editor.getCity(),
                     editor.getPhoneNumber(),
@@ -28,14 +29,22 @@ public class EditorService {
                     editor.getUsername(),
                     editor.getPassword()
             );
-            editorDTOOUTS.add(editorDTOOUT);
+            editorDTOS.add(editorDTO);
         }
-        return editorDTOOUTS;
+        return editorDTOS;
     }
 
 
-    public void addEditor(Editor editor) {
+    public void EditorRegistration(Editor editor) {
         editorRepository.save(editor);
+        Profile emptyProfile = new Profile();
+        emptyProfile.setDescription("");
+        emptyProfile.setNumberOfPosts(0);
+        emptyProfile.setImage("");
+        emptyProfile.setId(editor.getId());
+
+        editor.setProfile(emptyProfile);
+
     }
 
     public void updateEditor(Integer id, Editor editor) {

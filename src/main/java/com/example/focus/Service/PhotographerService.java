@@ -1,13 +1,18 @@
 package com.example.focus.Service;
 
 import com.example.focus.ApiResponse.ApiException;
-import com.example.focus.DTO.PhotographerDTOOUT;
+import com.example.focus.DTO.PhotographerDTO;
 import com.example.focus.Model.Photographer;
 import com.example.focus.Model.Profile;
+import com.example.focus.Model.RentTools;
+import com.example.focus.Model.Tool;
 import com.example.focus.Repository.PhotographerRepository;
+import com.example.focus.Repository.MyOrderRepository;
+import com.example.focus.Repository.ToolRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,36 +20,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PhotographerService {
     private final PhotographerRepository photographerRepository;
+    private final MyOrderRepository myOrderRepository;
+    private final ToolRepository toolRepository;
 
 
-    public List<PhotographerDTOOUT> getAllPhotographers() {
+    public List<PhotographerDTO> getAllPhotographers() {
         List<Photographer> photographers = photographerRepository.findAll();
-        List<PhotographerDTOOUT> photographerDTOOUTs = new ArrayList<>();
+        List<PhotographerDTO> photographerDTOS = new ArrayList<>();
 
         for (Photographer photographer : photographers) {
-            PhotographerDTOOUT photographerDTOOUT = new PhotographerDTOOUT(
+            PhotographerDTO photographerDTO = new PhotographerDTO(
                     photographer.getUsername(),
                     photographer.getName(),
                     photographer.getCity(),
                     photographer.getEmail(),
                     photographer.getPhoneNumber()
             );
-            photographerDTOOUTs.add(photographerDTOOUT);
+            photographerDTOS.add(photographerDTO);
         }
-        return photographerDTOOUTs;
+        return photographerDTOS;
     }
 
 
     public void PhotographerRegistration(Photographer photographer) {
 
+        photographerRepository.save(photographer);
         Profile emptyProfile = new Profile();
         emptyProfile.setDescription("");
         emptyProfile.setNumberOfPosts(0);
         emptyProfile.setImage("");
+        emptyProfile.setId(photographer.getId());
 
-        photographer.setProfile(emptyProfile);
-
-        photographerRepository.save(photographer);
+        editor.setProfile(emptyProfile);
     }
 
 
@@ -70,5 +77,33 @@ public class PhotographerService {
         } else {
             throw new ApiException("Photographer Not Found");
         }
+    }
+
+    public void rentTool(Integer photographer_id, Integer tool_id, RentTools rentTool) {
+        Photographer photographer = photographerRepository.findPhotographersById(photographer_id);
+        Tool tool = toolRepository.findToolById(tool_id);
+
+        if(photographer == null) {
+            throw new ApiException("photographer not found");
+        }
+
+        if(tool == null) {
+            throw new ApiException("tool not found");
+        }
+
+        if(rentTool.getToolId().equals(tool_id)) {
+            for (int i = 0; i < myOrderRepository.findAll().size(); i++) {
+                if (myOrderRepository.findAll().get(i).getStartDate().equals(rentTool.getStartDate()) && myOrderRepository.findAll().get(i).getEndDate().equals(rentTool.getEndDate())) {
+                    throw new ApiException("Can't rent the tool now");
+                }
+            }
+
+            long daysBetween = ChronoUnit.DAYS.between(rentTool.getStartDate(), rentTool.getEndDate());
+            Double totalPrice = tool.getRentalPrice()*daysBetween;
+            rentTool.setRentPrice(totalPrice);
+            myOrderRepository.save(rentTool);
+
+        }
+
     }
 }

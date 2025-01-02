@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ToolDTOOUT {
+public class ToolDTO {
 
     private String name;
 
